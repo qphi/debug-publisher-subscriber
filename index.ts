@@ -274,21 +274,3 @@ export class TimelineSubscriber extends Subscriber {
     }
 }
 
-const publisher = new TimelinePublisher('A');
-const subscriber = new TimelineSubscriber('B');
-
-subscriber.subscribe(publisher, 'say_hello', () => {
-    console.log('hello world');
-    throw new Error('Badaboum !');
-});
-
-publisher.publish('say_hello', { toto: 'lalala'});
-publisher.publish('foo');
-publisher.publish('bar');
-subscriber.destroy();
-publisher.publish('say_hello');
-publisher.destroy();
-
-console.log(manager.getHistory());
-console.log(manager.getHistoryFor(publisher.getId()));
-

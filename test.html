@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script src="dist/debug-publisher-subscriber.min.js"></script>
+<script>
+    const publisher = new TimelinePubSub.TimelinePublisher('A');
+    const subscriber = new TimelinePubSub.TimelineSubscriber('B');
+
+    subscriber.subscribe(publisher, 'say_hello', () => {
+        console.log('hello world');
+        throw new Error('Badaboum !');
+    });
+
+    publisher.publish('say_hello');
+    publisher.publish('foo');
+    publisher.publish('bar');
+    subscriber.destroy();
+    publisher.publish('say_hello');
+    publisher.destroy();
+
+    console.log(window.__qphi_pubsub_manager.getHistory());
+    console.log(window.__qphi_pubsub_manager.getHistoryFor(publisher.getId()));
+
+    window.__qphi_pubsub_manager.getHistory().forEach(entry => {
+        console.groupCollapsed(`%c[${entry.payload.publisher_id ?? entry.payload.subscriber_id}]`, `color: ${entry.payload.publisher_id ? 'yellow' : 'green'}`, `: [${entry.payload.notification ?? entry.message}]`);
+        console.groupCollapsed(`trace`);
+        entry.payload.getTrace();
+        console.groupEnd();
+        console.groupCollapsed('payload');
+        console.log(entry.payload.payload);
+        console.groupEnd();
+        console.groupEnd();
+    });
+</script>
+</body>
+</html>

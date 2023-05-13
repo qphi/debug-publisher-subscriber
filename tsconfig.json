@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "noImplicitAny": true,
+    "allowUmdGlobalAccess": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es2020",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitThis": true,
+    "lib": ["dom"],
+    "strict": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "declarationMap": true,
+    "baseUrl": "."
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
